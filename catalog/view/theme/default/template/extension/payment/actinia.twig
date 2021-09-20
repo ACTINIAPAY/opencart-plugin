@@ -1,0 +1,19 @@
+{% if actinia_data.message %}
+<div class="alert alert-warning">
+  {{ actinia_data.message }}
+  <button type="button" class="close" data-dismiss="alert">×</button>
+</div>
+{% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-9">
+                <h3>{{ confirm_pretext }}</h3>
+            </div>
+            <div class="col-12 col-md-3">
+                <a href="{{ url }}" role="button" class="btn btn-primary">
+                    {{ button_confirm }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
