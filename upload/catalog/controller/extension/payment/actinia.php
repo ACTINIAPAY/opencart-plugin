@@ -130,6 +130,7 @@ class ControllerExtensionPaymentActinia extends Controller
             }
 
             $this->load->model('extension/payment/actinia');
+            $callback = $this->model_extension_payment_actinia->decodeJsonObjToArr($callback, true);
             $payment = $this->model_extension_payment_actinia
                 ->setClientCodeName($this->config->get('payment_actinia_clientcodename'))
                 ->setPrivateKey($this->config->get('payment_actinia_prkey'))

@@ -113,7 +113,6 @@ class ModelExtensionPaymentActinia extends Model {
             return $this;
 
         } catch (Exception $e){
-//            echo ('<pre> invoiceCreate ' . print_r([$this->resultData, $e->getMessage()], true) . '<pre>');
             throw $e;
         }
     }
@@ -125,7 +124,7 @@ class ModelExtensionPaymentActinia extends Model {
      */
     public function send(){
         try{
-            $_data = (array) json_decode($this->sendToApi(), true);
+            $_data = $this->decodeJsonObjToArr($this->sendToApi());
 
             if(!empty($_data['data']) && !empty($_data['token'])) {
                 if($this->isHostPublicKey)
@@ -138,7 +137,6 @@ class ModelExtensionPaymentActinia extends Model {
             return $this;
 
         } catch (Exception $e){
-//            echo ('<pre> send ' . print_r($this->resultData, true) . '<pre>');
             throw $e;
         }
     }
@@ -149,9 +147,6 @@ class ModelExtensionPaymentActinia extends Model {
      */
     public function getErrorMsg():string{
         $_code = $this->resultData['errorData']['code'] ?? false;
-
-//        echo ('<pre> getErrorMsg' . print_r($this->resultData, true) . '<pre>');
-
         $_msg = $this->resultData['error'] ?? 'undefined';
 
         if($_code)
@@ -172,9 +167,6 @@ class ModelExtensionPaymentActinia extends Model {
      * @throws Exception
      */
     public function isSuccessException(){
-
-//        echo ('<pre> isSuccessException' . print_r($this->resultData, true) . '<pre>');
-
         if(!$this->success)
             throw new Exception($this->getErrorMsg());
 
@@ -379,6 +371,30 @@ class ModelExtensionPaymentActinia extends Model {
     }
 
 
+    /**
+     * @param $data
+     * @param false $isData
+     * @return array
+     */
+    public function decodeJsonObjToArr($data, $isData = false):array{
+        if($isData)
+            $_d = $data;
+        else
+            $_d = (array)json_decode(html_entity_decode($data), true);
+
+        $_d = (array)json_decode(json_encode($_d), true);
+
+        $res = [];
+        foreach ($_d as $key => $item) {
+            if(gettype($item) === 'object') {
+                $res[$key] = (array)$item;
+            }
+            else {
+                $res[$key] = $item;
+            }
+        }
+        return $res;
+    }
 
 
 
