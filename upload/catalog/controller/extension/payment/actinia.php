@@ -46,7 +46,6 @@ class ControllerExtensionPaymentActinia extends Controller
                 'merchantId' => $this->config->get('payment_actinia_merchant'),
                 'clientName' => sprintf('%s %s', $order_info['firstname'], $order_info['lastname']),
                 'clientEmail' => $order_info['email'],
-                'clientPhone' => $this->preparePhone($order_info['telephone']),
                 'description' => $desc,
                 'amount' => str_replace(',', '.', (string)round($order_info['total'] * $order_info['currency_value'], 2)),
                 'currency' => $payment_actinia_currency,
@@ -67,6 +66,10 @@ class ControllerExtensionPaymentActinia extends Controller
                     ]
                 ]
             ];
+
+            if(!empty($order_info['telephone']))
+                $paymentData['clientPhone'] = $this->preparePhone($order_info['telephone']);
+
 
             $resData = $this->model_extension_payment_actinia
                 ->setClientCodeName($this->config->get('payment_actinia_clientcodename'))
