@@ -2,7 +2,7 @@
 class ModelExtensionPaymentActinia extends Model {
 
     const URL_TEST = 'https://api.clients.sandbox.actinia.tech/';
-    const URL_PROD = 'https://api.clients.actinia.tech/';
+    const URL_PROD = 'https://api.clients.actinia.com.ua/';
 
     const SESSION_PUBLICKEY_NAME = "actinia_publicKey";
 
