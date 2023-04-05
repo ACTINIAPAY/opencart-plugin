@@ -140,9 +140,9 @@ class ControllerExtensionPaymentActinia extends Controller
                 ->chkPublicKey()
                 ->isPaymentValid($callback);
 
-            if ($payment['merchantId'] !== $this->config->get('payment_actinia_merchant')) {
-                throw new Exception('not valid merchantId (|' . $payment['merchantId'] . ' | ' . $this->config->get('payment_actinia_merchant') . '|)');
-            }
+//             if ($payment['merchantId'] !== $this->config->get('payment_actinia_merchant')) {
+//                 throw new Exception('not valid merchantId (|' . $payment['merchantId'] . ' | ' . $this->config->get('payment_actinia_merchant') . '|)');
+//             }
 
             list($order_id,) = explode(self::ORDER_SEPARATOR, $payment['externalId']);
             $this->load->model('checkout/order');
